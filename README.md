@@ -46,4 +46,36 @@ e.g: ``` python manage.py startapp learning_logs ```
 - Making web pages with django consists of 3 stages.
     * Defining the URL.         -> Describe the way URL is laid out. Tell the django what to look for when matching the browser request and url site. Then map with views.
     * Writing the views.        -> The views function retrieve and processing the data based on the browser request and render to the template.
-    * Writing the templates.    -> The template consists of overall structures.s
+    * Writing the templates.    -> The template consists of overall structures.
+
+    ### Defining the URL
+        - In current project directory, there is urls.py
+            We do need to add inlude function and the url pattern for learning_logs app
+            ``` from django.urls import path, include
+
+                urlpatterns = [
+                    path('admin/', admin.site.url),
+                    # Add this url pattern for learning logs
+                    path('', include('learning_logs.urls'))
+                ]
+            ```
+        - Creating new urls.py in learning_logs app
+            ```
+                # Define URL patterns for learning_logs
+
+                from django.urls import path
+
+                from . import views # import view module in same level of urls.py directory
+
+                app_name = 'learning_logs' # define this to distinguish this urls.py with other apps within same project
+
+                # list of individual pages that can be requested from the learning_logs app
+                urlpatterns = [
+                    # Home page
+                    path('', views.index, name='index'),
+                ]
+            ```
+            - The actual URL pattern call the path function that take 3 arguments
+                * First arg     : It is string that help django route the current request properly
+                * Second arg    : Which function to call in a views
+                * Third arg     : Name the url pattern.
